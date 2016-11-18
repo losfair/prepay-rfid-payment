@@ -1,4 +1,3 @@
-<h1>Admin Login</h1>
 <?php
 session_start();
 session_destroy();
@@ -9,6 +8,7 @@ if (isset($_GET["message"])) {
   ';
 }
 ?>
+<h1>Admin Login</h1>
 <fieldset>
 <legend>Login Info</legend>
 <form method="post" name="login" action="authenticate.php">

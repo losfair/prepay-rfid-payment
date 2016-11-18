@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Admin Panel</title>
+
+    <meta name="author" content="losfair">
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+  </head>
+  <body>
+
+    <div class="container-fluid" id="container">
+	<div class="row">
+		<div class="col-md-12">
+			<h3 style="margin-bottom: 20px">{{pageTitle}}</h3>
+            <div class="alert alert-success" v-if="mainAlertIsShowed">
+				 
+				<button type="button" class="close" aria-hidden="true" v-on:click="hideAlert">
+					×
+				</button>
+                <span>{{mainAlertText}}</span>
+			</div>
+			<form role="form" v-if="showLoginForm" action="javascript:;">
+				<div class="form-group">
+					<label for="loginUserName">
+						User name
+					</label>
+					<input type="text" class="form-control" v-model="loginUserName">
+				</div>
+				<div class="form-group">
+					 
+					<label for="loginPassword">
+						Password
+					</label>
+					<input type="password" class="form-control" v-model="loginPassword">
+				</div>
+				<button type="submit" class="btn btn-default" v-on:click="doLogin">
+					Login
+				</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/vue.min.js"></script>
+    <script src="bundle.min.js"></script>
+  </body>
+</html>
