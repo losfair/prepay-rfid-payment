@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS `terminals` (
   `terminal_enabled` tinyint(1) NOT NULL DEFAULT '0',
   `terminal_amount` float NOT NULL DEFAULT '0',
   `terminal_message` varchar(32) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `transaction_log` (
 `transaction_id` int(16) unsigned zerofill NOT NULL,
@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS `transaction_log` (
   `transaction_amount` float DEFAULT NULL,
   `transaction_datetime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `transaction_terminal_id` int(4) unsigned zerofill DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=91 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `users` (
 `user_id` int(8) unsigned NOT NULL,
@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `admin_privilege` int(1) DEFAULT '0',
   `admin_login` varchar(45) DEFAULT NULL,
   `admin_hashedpassword` varchar(256) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
 
 ALTER TABLE `terminals`
@@ -44,11 +44,11 @@ ALTER TABLE `users`
 
 
 ALTER TABLE `terminals`
-MODIFY `terminal_id` int(4) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+MODIFY `terminal_id` int(4) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=0;
 ALTER TABLE `transaction_log`
-MODIFY `transaction_id` int(16) unsigned zerofill NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=91;
+MODIFY `transaction_id` int(16) unsigned zerofill NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=0;
 ALTER TABLE `users`
-MODIFY `user_id` int(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+MODIFY `user_id` int(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=0;
 
 ALTER TABLE `transaction_log`
 ADD CONSTRAINT `transaction_initializedby_user_id_ibfk` FOREIGN KEY (`transaction_initializedby_user_id`) REFERENCES `users` (`user_id`) ON DELETE SET NULL ON UPDATE CASCADE,
