@@ -10,25 +10,54 @@ var jQuery = $;
 require("babel-polyfill");
 var app;
 function loadLoginPage() {
+    app.$data.pageTitle = "Login";
+    app.$data.showLoginForm = true;
+}
+function hideAlert() {
+    app.$data.mainAlertIsShowed = false;
+}
+function showAlert(msg) {
+    app.$data.mainAlertText = msg;
+    app.$data.mainAlertIsShowed = true;
+}
+function doLogin() {
     return __awaiter(this, void 0, void 0, function* () {
-        app.$data.pageTitle = "Login";
-        app.$data.showLoginForm = true;
+        var resultStr = yield new Promise(function (callback) {
+            jQuery.post("authenticate.php", function (resp) {
+                callback(resp);
+            });
+        });
+        let result = null;
+        try {
+            result = JSON.parse(resultStr);
+        }
+        catch (e) {
+            showAlert("Login failed: Unable to parse response");
+            return;
+        }
+        if (result.err !== 0) {
+            showAlert("Error " + result.err.toString() + ": " + result.msg);
+        }
+        else {
+            showAlert("Logged in");
+            location.replace(result.location);
+        }
     });
 }
-;
 function initPage() {
     app = new Vue({
         el: "#container",
         data: {
             "pageTitle": "",
+            "mainAlertIsShowed": false,
+            "mainAlertText": "",
             "showLoginForm": false,
             "loginUserName": "",
             "loginPassword": ""
         },
         methods: {
-            "doLogin": function () {
-                alert("doLogin");
-            }
+            "doLogin": doLogin,
+            "hideAlert": hideAlert
         }
     });
     loadLoginPage();
