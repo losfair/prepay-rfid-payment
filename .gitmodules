@@ -1,0 +1,3 @@
+[submodule "php_admin_portal/chosen"]
+	path = php_admin_portal/chosen
+	url = https://github.com/harvesthq/chosen-package
