@@ -1,8 +1,15 @@
 <?php
+session_start();
+
 $db = new mysqli('localhost', 'nfc_payment', 'z4d0Xy6iwtFE4SIN', 'nfc_payment');
 
-$login_username = $_POST["username"];
-$login_password = $_POST["password"];
+$login_data = json_decode(file_get_contents("php://input"), true);
+$login_username = $login_data["username"];
+$login_password = $login_data["password"];
+
+if(!is_string($login_username) || !is_string($login_password)) {
+  exit("Bad arguments");
+}
 
 $stmt_login = $db->prepare('SELECT user_id, login_hashedpassword FROM users WHERE login_username = ?');
 $stmt_login->bind_param('s', $login_username);
@@ -24,14 +31,19 @@ if (password_verify($login_password, $login_hashedpassword)){
     }
   }
   $db->close();
-  session_start();
   $_SESSION['user_id'] = $user_id;
-  echo "You are logged in";
-  header('Location: admin_portal.php');
-  exit;
+  echo json_encode(array(
+    "err" => 0,
+    "msg" => "Logged in",
+    "location" => "admin_portal.php"
+  ));
+  exit();
 } else {
   $db->close();
-  header('Location: login.php?message='.htmlentities("Login Failed"));
-  exit;
+  echo json_encode(array(
+    "err" => 1000,
+    "msg" => "Unable to log in"
+  ));
+  exit();
 }
 ?>
