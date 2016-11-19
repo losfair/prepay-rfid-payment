@@ -1,3 +1,3 @@
 ts:
 	tsc -p .
-	babel -d ../ts_compiled/ index.js
+	babel -d ../ts_compiled/ *.js

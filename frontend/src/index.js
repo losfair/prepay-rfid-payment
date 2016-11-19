@@ -1,51 +1,15 @@
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator.throw(value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments)).next());
-    });
-};
-var jQuery = $;
+"use strict";
 require("babel-polyfill");
-var app;
+const pageController = require("./page");
+const pageUtils = require("./page_utils");
+const loginController = require("./login");
+var jQuery = $;
 function loadLoginPage() {
-    app.$data.pageTitle = "Login";
-    app.$data.showLoginForm = true;
-}
-function hideAlert() {
-    app.$data.mainAlertIsShowed = false;
-}
-function showAlert(msg) {
-    app.$data.mainAlertText = msg;
-    app.$data.mainAlertIsShowed = true;
-}
-function doLogin() {
-    return __awaiter(this, void 0, void 0, function* () {
-        var resultStr = yield new Promise(function (callback) {
-            jQuery.post("authenticate.php", function (resp) {
-                callback(resp);
-            });
-        });
-        let result = null;
-        try {
-            result = JSON.parse(resultStr);
-        }
-        catch (e) {
-            showAlert("Login failed: Unable to parse response");
-            return;
-        }
-        if (result.err !== 0) {
-            showAlert("Error " + result.err.toString() + ": " + result.msg);
-        }
-        else {
-            showAlert("Logged in");
-            location.replace(result.location);
-        }
-    });
+    pageController.app.$data.pageTitle = "Login";
+    pageController.app.$data.showLoginForm = true;
 }
 function initPage() {
-    app = new Vue({
+    pageController.app = new Vue({
         el: "#container",
         data: {
             "pageTitle": "",
@@ -56,8 +20,8 @@ function initPage() {
             "loginPassword": ""
         },
         methods: {
-            "doLogin": doLogin,
-            "hideAlert": hideAlert
+            "doLogin": loginController.doLogin,
+            "hideAlert": pageUtils.hideAlert
         }
     });
     loadLoginPage();
