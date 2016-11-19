@@ -44,6 +44,18 @@
 					Login
 				</button>
 			</form>
+			<table class="table" v-if="showUserInfoTable">
+				<tbody>
+					<tr>
+						<td>
+							User Id
+						</td>
+						<td>
+							{{currentUserId}}
+						</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 	</div>
 </div>

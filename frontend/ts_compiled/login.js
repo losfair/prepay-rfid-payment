@@ -77,4 +77,10 @@ function doLogin() {
     }));
 }
 exports.doLogin = doLogin;
+function loadLoginPage() {
+    pageController.app.$data.pageTitle = "Login";
+    pageController.app.$data.showLoginForm = true;
+    pageController.app.$data.mainAlertIsShowed = false;
+}
+exports.loadLoginPage = loadLoginPage;
 //# sourceMappingURL=login.js.map

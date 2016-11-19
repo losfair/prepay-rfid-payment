@@ -32,3 +32,9 @@ export async function doLogin() {
         location.replace(result.location);
     }
 }
+
+export function loadLoginPage() {
+    pageController.app.$data.pageTitle = "Login";
+    pageController.app.$data.showLoginForm = true;
+    pageController.app.$data.mainAlertIsShowed = false;
+}

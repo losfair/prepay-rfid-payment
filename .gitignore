@@ -1,3 +1,6 @@
+php_admin_portal_debug/
+web_build/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

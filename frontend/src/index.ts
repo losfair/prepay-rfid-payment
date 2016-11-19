@@ -6,30 +6,51 @@ require("babel-polyfill");
 import pageController = require("./page");
 import pageUtils = require("./page_utils");
 import loginController = require("./login");
+import userController = require("./user");
 var jQuery = $;
 
-function loadLoginPage () {
-    pageController.app.$data.pageTitle = "Login";
-    pageController.app.$data.showLoginForm = true;
+async function loadInitialPage() {
+    let userInfoStr: any = await new Promise(function(callback) {
+        jQuery.post("get_current_user_info.php", {}, function(resp) {
+            callback(resp);
+        })
+    });
+
+    let userInfo = null;
+    try {
+        userInfo = JSON.parse(userInfoStr);
+    } catch(e) {
+        loginController.loadLoginPage();
+        return;
+    }
+
+    if(userInfo.err !== 0) {
+        loginController.loadLoginPage();
+        return;
+    }
+
+    userController.loadUserPage(userInfo.userId.toString());
 }
 
-function initPage() {
+async function initPage() {
     pageController.app = new Vue({
         el: "#container",
         data: {
             "pageTitle": "",
-            "mainAlertIsShowed": false,
-            "mainAlertText": "",
+            "mainAlertIsShowed": true,
+            "mainAlertText": "Loading",
             "showLoginForm": false,
             "loginUserName": "",
-            "loginPassword": ""
+            "loginPassword": "",
+            "showUserInfoTable": false,
+            "currentUserId": ""
         },
         methods: {
             "doLogin": loginController.doLogin,
             "hideAlert": pageUtils.hideAlert
         }
     });
-    loadLoginPage();
+    loadInitialPage();
 }
 
 window.addEventListener("load", initPage);
