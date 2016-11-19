@@ -23,7 +23,10 @@ function showAlert(msg: string) {
 
 async function doLogin() {
     var resultStr: any = await new Promise(function(callback) {
-        jQuery.post("authenticate.php", function(resp) {
+        jQuery.post("authenticate.php", JSON.stringify({
+            "username": app.$data.loginUserName,
+            "password": app.$data.loginPassword
+        }), function(resp) {
             callback(resp);
         })
     });
